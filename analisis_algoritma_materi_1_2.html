@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animasi Linear vs Binary Search</title>
+
+  <style>
+    body { margin:0; font-family:"Poppins",sans-serif; background:radial-gradient(circle at top,#0f172a,#020617); color:white; overflow:hidden; }
+    .container{display:flex;width:100vw;height:100vh}
+    .sidebar{width:300px;background:rgba(15,23,42,.95);padding:30px 20px;box-shadow:4px 0 30px rgba(0,0,0,.5)}
+    .logo{font-size:18px;margin-bottom:10px;color:#22c55e;font-weight:bold}
+    .content{flex:1;display:flex;justify-content:center;align-items:center;padding:30px}
+    .card{background:rgba(255,255,255,.05);padding:25px;border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.4);backdrop-filter:blur(10px);width:100%;max-width:1000px;text-align:center}
+
+    h1{font-size:40px;margin:5px 0 10px;background:linear-gradient(90deg,#38bdf8,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    p{font-size:18px}
+
+    .controls{margin:15px 0}
+    input[type=range]{width:60%}
+    button{background:linear-gradient(90deg,#38bdf8,#22c55e);border:none;padding:10px 20px;border-radius:8px;font-size:16px;cursor:pointer;margin:5px;color:#020617;font-weight:bold}
+
+    .array{display:flex;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .box{width:45px;height:45px;margin:5px;border-radius:6px;background:#1e293b;display:flex;justify-content:center;align-items:center;font-size:14px;transition:.3s}
+    .active{background:#f59e0b}
+    .found{background:#22c55e}
+    .mid{background:#38bdf8}
+
+    .stats{margin-top:15px;font-size:18px}
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar">
+    <div class="logo">UNSULBAR • Search Animation</div>
+    <p>Animasi langkah demi langkah Linear & Binary Search</p>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h1>Simulasi Pencarian Data</h1>
+      <p>Pilih ukuran array dan nilai target, lalu jalankan algoritma</p>
+
+      <div class="controls">
+        Ukuran Data: <span id="sizeLabel">20</span><br>
+        <input type="range" min="5" max="50" value="20" id="sizeRange" oninput="updateArray()"><br>
+        Target: <input type="number" id="targetInput" value="15" style="width:80px">
+        <br>
+        <button onclick="startLinear()">Linear Search</button>
+        <button onclick="startBinary()">Binary Search</button>
+        <button onclick="resetAll()">Reset</button>
+      </div>
+
+      <div class="array" id="arrayContainer"></div>
+
+      <div class="stats" id="stats"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let arr=[];
+let boxes=[];
+let delay=300;
+
+function updateArray(){
+  let size=parseInt(document.getElementById('sizeRange').value);
+  document.getElementById('sizeLabel').innerText=size;
+  arr=[];
+  for(let i=1;i<=size;i++) arr.push(i);
+  renderArray();
+}
+
+function renderArray(){
+  let container=document.getElementById('arrayContainer');
+  container.innerHTML='';
+  boxes=[];
+  arr.forEach(val=>{
+    let div=document.createElement('div');
+    div.className='box';
+    div.innerText=val;
+    container.appendChild(div);
+    boxes.push(div);
+  });
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+async function startLinear(){
+  resetColors();
+  let target=parseInt(document.getElementById('targetInput').value);
+  let start=performance.now();
+  let steps=0;
+
+  for(let i=0;i<arr.length;i++){
+    boxes[i].classList.add('active');
+    steps++;
+    await sleep(delay);
+    if(arr[i]===target){
+      boxes[i].classList.remove('active');
+      boxes[i].classList.add('found');
+      break;
+    }
+    boxes[i].classList.remove('active');
+  }
+
+  let end=performance.now();
+  showStats("Linear",steps,end-start);
+}
+
+async function startBinary(){
+  resetColors();
+  let target=parseInt(document.getElementById('targetInput').value);
+  let start=performance.now();
+  let steps=0;
+
+  let left=0,right=arr.length-1;
+
+  while(left<=right){
+    let mid=Math.floor((left+right)/2);
+    boxes[mid].classList.add('mid');
+    steps++;
+    await sleep(delay);
+
+    if(arr[mid]===target){
+      boxes[mid].classList.remove('mid');
+      boxes[mid].classList.add('found');
+      break;
+    }
+
+    if(arr[mid]<target){
+      left=mid+1;
+    }else{
+      right=mid-1;
+    }
+
+    boxes[mid].classList.remove('mid');
+  }
+
+  let end=performance.now();
+  showStats("Binary",steps,end-start);
+}
+
+function showStats(type,steps,time){
+  document.getElementById('stats').innerHTML=`
+    Algoritma: <b>${type} Search</b><br>
+    Jumlah Langkah: <b>${steps}</b><br>
+    Waktu Eksekusi: <b>${time.toFixed(3)} ms</b>
+  `;
+}
+
+function resetColors(){
+  boxes.forEach(b=>{
+    b.classList.remove('active','found','mid');
+  });
+}
+
+function resetAll(){
+  updateArray();
+  document.getElementById('stats').innerHTML='';
+}
+
+function openFullscreen(){
+  let elem=document.documentElement;
+  if(elem.requestFullscreen) elem.requestFullscreen();
+}
+
+window.onload=()=>{
+  updateArray();
+  openFullscreen();
+}
+</script>
+
+</body>
+</html>

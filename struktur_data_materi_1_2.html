@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Struktur Data - Pertemuan 1 & 2</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      height: 100vh;
+      padding: 60px;
+      box-sizing: border-box;
+    }
+
+    .active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    p, li {
+      font-size: 26px;
+      line-height: 1.6;
+    }
+
+    ul {
+      margin-top: 20px;
+    }
+
+    code {
+      display: block;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 20px;
+      overflow-x: auto;
+      color: #00ffcc;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide active">
+  <h1>STRUKTUR DATA</h1>
+  <h2>Pertemuan 1 & 2</h2>
+  <p>Pengantar Struktur Data dan Abstract Data Type (ADT)</p>  
+  <p>Wawan Firgiawan, S.T., M.Kom.</p>
+  <div class="footer">Gunakan tombol ← → untuk navigasi</div>
+</div>
+
+<div class="slide">
+  <h2>Capaian Pembelajaran</h2>
+  <ul>
+    <li>Memahami konsep dasar struktur data</li>
+    <li>Menjelaskan peran struktur data dalam algoritma</li>
+    <li>Memahami klasifikasi struktur data</li>
+    <li>Memahami konsep Abstract Data Type (ADT)</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Apa itu Struktur Data?</h2>
+  <p>
+    Struktur data adalah cara mengorganisasi dan menyimpan data agar dapat digunakan secara efisien.
+  </p>
+  <ul>
+    <li>Efisiensi waktu</li>
+    <li>Efisiensi memori</li>
+    <li>Kemudahan manipulasi data</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Contoh Struktur Data</h2>
+  <ul>
+    <li>Array</li>
+    <li>Linked List</li>
+    <li>Stack</li>
+    <li>Queue</li>
+    <li>Tree</li>
+    <li>Graph</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Klasifikasi Struktur Data</h2>
+  <ul>
+    <li><b>Struktur Data Linier</b>: Array, Linked List, Stack, Queue</li>
+    <li><b>Struktur Data Non Linier</b>: Tree, Graph</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Abstract Data Type (ADT)</h2>
+  <p>
+    ADT adalah model logis yang mendefinisikan data dan operasi tanpa menjelaskan implementasi.
+  </p>
+  <ul>
+    <li>Fokus pada operasi</li>
+    <li>Tidak tergantung bahasa pemrograman</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Contoh ADT Stack</h2>
+  <ul>
+    <li>Push → tambah data</li>
+    <li>Pop → hapus data</li>
+    <li>Peek → lihat data teratas</li>
+    <li>IsEmpty → cek kosong</li>
+  </ul>
+  <p>Konsep: LIFO (Last In First Out)</p>
+</div>
+
+<div class="slide">
+  <h2>ADT vs Struktur Data</h2>
+  <ul>
+    <li><b>ADT</b>: Konsep logis</li>
+    <li><b>Struktur Data</b>: Implementasi nyata</li>
+  </ul>
+</div>
+<div class="slide">
+  <h2>Diskusi</h2>
+  <ul>
+    <li>Mengapa struktur data penting?</li>
+    <li>Apa perbedaan ADT dan struktur data?</li>
+    <li>Contoh penggunaan di kehidupan nyata?</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>Kesimpulan</h2>
+  <ul>
+    <li>Struktur data mengatur data agar efisien</li>
+    <li>ADT adalah konsep sebelum implementasi</li>
+    <li>Struktur data penting dalam algoritma</li>
+  </ul>
+</div>
+
+<script>
+  let slides = document.querySelectorAll('.slide');
+  let index = 0;
+
+  function showSlide(i) {
+    slides[index].classList.remove('active');
+    index = (i + slides.length) % slides.length;
+    slides[index].classList.add('active');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') showSlide(index + 1);
+    if (e.key === 'ArrowLeft') showSlide(index - 1);
+  });
+</script>
+
+</body>
+</html>
